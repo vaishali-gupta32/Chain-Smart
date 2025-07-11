@@ -1,0 +1,473 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chain Smart - Sustainable Shopping</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f7f7f7;
+        }
+        
+        /* Header */
+        header {
+            background-color: #0071dc;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .search-bar {
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+        
+        .search-bar input {
+            width: 80%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+        }
+        
+        .user-actions a {
+            color: white;
+            margin-left: 15px;
+            text-decoration: none;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: #004f9a;
+            padding: 10px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-right: 20px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        /* Main Content */
+        .container {
+            padding: 20px;
+            display: flex;
+        }
+        
+        .category-sidebar {
+            width: 250px;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-right: 20px;
+        }
+        
+        .category-sidebar h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #333;
+        }
+        
+        .filter-section {
+            margin-bottom: 20px;
+        }
+        
+        .filter-section h4 {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .esg-slider {
+            width: 100%;
+            margin: 10px 0;
+        }
+        
+        .esg-value {
+            text-align: center;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        
+        .sort-options {
+            margin-top: 15px;
+        }
+        
+        .sort-options select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .category-list {
+            list-style: none;
+            margin-top: 10px;
+        }
+        
+        .category-list li {
+            margin-bottom: 8px;
+        }
+        
+        .category-list li a {
+            color: #333;
+            text-decoration: none;
+        }
+        
+        .category-list li a:hover {
+            color: #0071dc;
+        }
+        
+        .products-grid {
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-card img {
+            max-width: 100%;
+            height: 160px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        
+        .product-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .product-price {
+            color: #0071dc;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .original-price {
+            text-decoration: line-through;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .esg-rating {
+            margin: 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .leaf {
+            color: #4CAF50;
+            margin: 0 2px;
+            font-size: 18px;
+        }
+        
+        .esg-score {
+            margin-left: 5px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .add-to-cart {
+            background-color: #FFC220;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #e6ac00;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">Chain Smart</div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search sustainable products...">
+        </div>
+        <div class="user-actions">
+            <a href="#"><i class="fas fa-user"></i> Account</a>
+            <a href="#"><i class="fas fa-shopping-cart"></i> Cart</a>
+        </div>
+    </header>
+    
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Categories</a></li>
+            <li><a href="#">Deals</a></li>
+            <li><a href="#">ESG Leaderboard</a></li>
+            <li><a href="#">Discount Calculator</a></li>
+        </ul>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Sidebar with Filters -->
+        <div class="category-sidebar">
+            <h3>Filters</h3>
+            
+            <!-- ESG Score Slider -->
+            <div class="filter-section">
+                <h4>ESG Rating</h4>
+                <input type="range" min="1" max="5" value="5" class="esg-slider" id="esgSlider">
+                <div class="esg-value">Min. ESG: <span id="esgValue">5</span> 🍃</div>
+            </div>
+            
+            <!-- Price Sort -->
+            <div class="filter-section sort-options">
+                <h4>Sort By</h4>
+                <select id="priceSort">
+                    <option value="default">Default</option>
+                    <option value="low-high">Price: Low to High</option>
+                    <option value="high-low">Price: High to Low</option>
+                </select>
+            </div>
+            
+            <!-- Categories -->
+            <div class="filter-section">
+                <h4>Categories</h4>
+                <ul class="category-list">
+                    <li><a href="#">All Products</a></li>
+                    <li><a href="#">Food & Grocery</a></li>
+                    <li><a href="#">Eco-Friendly Home</a></li>
+                    <li><a href="#">Reusable Products</a></li>
+                    <li><a href="#">Organic Clothing</a></li>
+                    <li><a href="#">Zero-Waste</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Products Grid -->
+        <div class="products-grid">
+            <!-- Product 1 -->
+            <div class="product-card" data-esg="5" data-price="5.99">
+                <img src="https://thecoconutpeople.in/cdn/shop/products/IMG_5719_1000x.jpg?v=1642080641" alt="Bamboo Toothbrush">
+                <div class="product-title">Bamboo Toothbrush</div>
+                <div class="esg-rating">
+                    <span class="leaf">🍃</span><span class="leaf">🍃</span><span class="leaf">🍃</span><span class="leaf">🍃</span><span class="leaf">🍃</span>
+                    <span class="esg-score">(5/5)</span>
+                </div>
+                <div class="product-price">$5.99</div>
+                <div class="original-price">$7.99</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            
+            <!-- Product 2 -->
+            <div class="product-card" data-esg="4" data-price="12.99">
+                <img src="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQPMzBHTZw8kE8aP1NUmB47lbMR5L2AKc5-AhnbcRzUwXEKUilpWPkhY_y0oC69WIl8O-6bJhDS1_C6i6IicTGtlrCEZOVoJ3oBt0MWq7yRJjbzVT3atFBiwWg" alt="Reusable Water Bottle">
+                <div class="product-title">Stainless Steel Bottle</div>
+                <div class="esg-rating">
+                    <span class="leaf">🍃</span><span class="leaf">🍃</span><span class="leaf">🍃</span><span class="leaf">🍃</span>
+                    <span class="esg-score">(4/5)</span>
+                </div>
+                <div class="product-price">$12.99</div>
+                <div class="original-price">$15.99</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            
+            <!-- Product 3 -->
+            <div class="product-card" data-esg="3" data-price="19.99">
+                <img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTz6_toe7CWoYtn3kPR1VR7PXT7ZeUl5d-MaOpjqwpu3QWlbmqEsopb1jKxFn7feGP_FX_KBsDP9f4Ek_5Oy5gJTHcl42Y9ZDA2tvYu6RsmaBogUe38vWCVsPMAXiMspHrCL2cTUz0e&usqp=CAc" alt="Organic Cotton T-Shirt">
+                <div class="product-title">Organic Cotton T-Shirt</div>
+                <div class="esg-rating">
+                    <span class="leaf">🍃</span><span class="leaf">🍃</span><span class="leaf">🍃</span>
+                    <span class="esg-score">(3/5)</span>
+                </div>
+                <div class="product-price">$19.99</div>
+                <div class="original-price">$24.99</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            
+            <!-- Product 4 -->
+            <div class="product-card" data-esg="4" data-price="8.49">
+                <img src="https://m.media-amazon.com/images/I/61xk01tcSnL.jpg" alt="Compostable Cutlery Set">
+                <div class="product-title">Compostable Cutlery Set</div>
+                <div class="esg-rating">
+                    <span class="leaf">🍃</span><span class="leaf">🍃</span><span class="leaf">🍃</span><span class="leaf">🍃</span>
+                    <span class="esg-score">(4/5)</span>
+                </div>
+                <div class="product-price">$8.49</div>
+                <div class="original-price">$10.99</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            
+            <!-- Product 5 -->
+            <div class="product-card" data-esg="5" data-price="25.99">
+                <img src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRhOCMMQdSMNRswh80_LprVYxBxrN4LicjYIvyP2fRj8tzQYzhw2OeMe_XgDNlz4rRBEjZnhWAif5OcQyEn_YFPXSdjp1kh8pHX5mPKZ7iUVjRJlZ9VmDBhdg" alt="Solar-Powered Charger">
+                <div class="product-title">Solar-Powered Charger</div>
+                <div class="esg-rating">
+                    <span class="leaf">🍃</span><span class="leaf">🍃</span><span class="leaf">🍃</span><span class="leaf">🍃</span><span class="leaf">🍃</span>
+                    <span class="esg-score">(5/5)</span>
+                </div>
+                <div class="product-price">$25.99</div>
+                <div class="original-price">$34.99</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            
+            <!-- Product 6 -->
+            <div class="product-card" data-esg="2" data-price="14.50">
+                <img src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcR8Pv7aUlH_Xo_4_A22soPntXdP312e-qUgpcciHh1NX21GlrCdoCerV5lyEI5LadDb6tu2IW0gMDypRjkxEZMjy7x_wuqeB92JMBLxR0Duiiy3blD8kzTM" alt="Recycled Notebook">
+                <div class="product-title">Recycled Paper Notebook</div>
+                <div class="esg-rating">
+                    <span class="leaf">🍃</span><span class="leaf">🍃</span>
+                    <span class="esg-score">(2/5)</span>
+                </div>
+                <div class="product-price">$14.50</div>
+                <div class="original-price">$17.99</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            
+            <!-- Product 7 -->
+            <div class="product-card" data-esg="3" data-price="32.99">
+                <img src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcT033fhM_Txd4Td1wtTIXkMw8joJFGSJHarmUL8OsG-qekIyoTCE3Jhg-4psc3DDjnoM5G5a-PTQFdXwlzGgEVtOESEcltu80v7cwaN1vE" alt="Bamboo Sunglasses">
+                <div class="product-title">Bamboo Sunglasses</div>
+                <div class="esg-rating">
+                    <span class="leaf">🍃</span><span class="leaf">🍃</span><span class="leaf">🍃</span>
+                    <span class="esg-score">(3/5)</span>
+                </div>
+                <div class="product-price">$32.99</div>
+                <div class="original-price">$39.99</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            
+            <!-- Product 8 -->
+            <div class="product-card" data-esg="5" data-price="9.99">
+                <img src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQ7bu4kohtZdJuIrbvQ3YBHpEfMRhj6U1PGDEzPrSnMAXylFOrb37IxgGVEQmVIPm9ebnkM4kHZsEc7otirdiTo18hMbXZapGGI8JEVHgjUOQxvnc8xUt0ARA" alt="Hemp Shopping Bag">
+                <div class="product-title">Hemp Shopping Bag</div>
+                <div class="esg-rating">
+                    <span class="leaf">🍃</span><span class="leaf">🍃</span><span class="leaf">🍃</span><span class="leaf">🍃</span><span class="leaf">🍃</span>
+                    <span class="esg-score">(5/5)</span>
+                </div>
+                <div class="product-price">$9.99</div>
+                <div class="original-price">$12.99</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+
+            <!-- Product 9 -->
+              <div class="product-card" data-esg="5" data-price="9.99">
+                <img src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcT9K5zhGHce-43963J4Ngeiy2CYcZ3g4mlDqPDUIk2uzLVKjfMUzeUCDjMzygpvVX4On7QzJ_4QafOSNxVOTwZ0UNBhyC02aHzPEpWI7hnhoyvUMCOia1yg&usqp=CAc" alt="Hemp Shopping Bag">
+                <div class="product-title">Rose Gold Necklace</div>
+                <div class="esg-rating">
+                    <span class="leaf">🍃</span><span class="leaf">🍃</span>
+                    <span class="esg-score">(2/5)</span>
+                </div>
+                <div class="product-price">$13.99</div>
+                <div class="original-price">$16.99</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+
+            <!-- Product 10 -->
+              <div class="product-card" data-esg="5" data-price="9.99">
+                <img src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcS1084QIPpHICW7TFLs4_uIptNlL74FBLXz21QyGzOOXmxCRHNKEkRjd2aj5PFO3SoB0MmGajDODtbIDmQ2O8nJgv7-1nr1q2bkT60Fsye-soLkoeWi5QpvKalHUrfCW3QbdwQ09UEJIA&usqp=CAc" alt="Hemp Shopping Bag">
+                <div class="product-title">Lakme Eyeconic Mascara</div>
+                <div class="esg-rating">
+                    <span class="leaf">🍃</span><span class="leaf">🍃</span>
+                    <span class="esg-score">(2/5)</span>
+                </div>
+                <div class="product-price">$8.39</div>
+                <div class="original-price">$12.99</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        </div>
+
+
+    <!-- JavaScript for Filters -->
+    <script>
+        // ESG Slider
+        const esgSlider = document.getElementById('esgSlider');
+        const esgValue = document.getElementById('esgValue');
+        
+        esgSlider.addEventListener('input', function() {
+            esgValue.textContent = this.value;
+            filterProducts();
+        });
+        
+        // Price Sort
+        const priceSort = document.getElementById('priceSort');
+        priceSort.addEventListener('change', filterProducts);
+        
+        // Filter and Sort Products
+        function filterProducts() {
+            const minESG = parseInt(esgSlider.value);
+            const sortOption = priceSort.value;
+            const productCards = document.querySelectorAll('.product-card');
+            
+            // Filter by ESG
+            productCards.forEach(card => {
+                const cardESG = parseInt(card.getAttribute('data-esg'));
+                if (cardESG >= minESG) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Sort by Price
+            const visibleProducts = Array.from(productCards).filter(card => card.style.display !== 'none');
+            visibleProducts.sort((a, b) => {
+                const priceA = parseFloat(a.getAttribute('data-price'));
+                const priceB = parseFloat(b.getAttribute('data-price'));
+                
+                if (sortOption === 'low-high') return priceA - priceB;
+                if (sortOption === 'high-low') return priceB - priceA;
+                return 0;
+            });
+            
+            // Reorder products in grid
+            const productsGrid = document.querySelector('.products-grid');
+            visibleProducts.forEach(product => {
+                productsGrid.appendChild(product);
+            });
+        }
+    </script>
+</body>
+</html>
