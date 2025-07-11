@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - Chain Smart</title>
+    <style>
+        :root {
+            --primary: #0071dc;       /* Chain Smart blue */
+            --secondary: #ffc220;     /* Chain Smart yellow */
+            --eco-green: #2e8b57;     /* Sustainability green */
+            --dark: #333333;
+            --medium: #666666;
+            --light: #f5f5f5;
+            --border: #e0e0e0;
+            --walmart-blue: #0071dc;
+            --walmart-dark: #1a1a1a;
+        }
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--dark);
+            background: white;
+            line-height: 1.5;
+        }
+        /* Walmart-style Navbar */
+        .navbar {
+            background-color: var(--walmart-blue);
+            color: white;
+            padding: 10px 0;
+            font-size: 14px;
+        }
+        .navbar-container {
+            display: flex;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        .navbar-logo {
+            font-weight: bold;
+            font-size: 20px;
+            margin-right: 20px;
+        }
+        .navbar-links {
+            display: flex;
+            flex-grow: 1;
+        }
+        .navbar-link {
+            color: white;
+            text-decoration: none;
+            margin-right: 15px;
+            padding: 5px 0;
+        }
+        .navbar-link:hover {
+            text-decoration: underline;
+        }
+        .navbar-search {
+            flex-grow: 1;
+            max-width: 600px;
+            margin: 0 20px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            border-radius: 3px;
+        }
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+        }
+        .navbar-icon {
+            margin-left: 15px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 12px;
+        }
+        /* Account Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        .account-header {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .welcome-msg {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .member-since {
+            color: var(--medium);
+            font-size: 14px;
+        }
+        .dashboard-layout {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .sidebar {
+            width: 250px;
+            background: var(--light);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .nav-item {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-item a {
+            text-decoration: none;
+            color: var(--dark);
+            display: block;
+        }
+        .nav-item.active a {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        .main-content {
+            flex: 1;
+        }
+        .card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--dark);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .profile-info {
+            display: flex;
+            gap: 20px;
+        }
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--medium);
+        }
+        .profile-details {
+            flex: 1;
+        }
+        .profile-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .profile-email, .profile-phone {
+            color: var(--medium);
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        .wallet-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        .wallet-balance {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .leaves-earned {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f0f8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        .leaves-icon {
+            color: var(--eco-green);
+            font-size: 24px;
+        }
+        .leaves-count {
+            font-weight: bold;
+            color: var(--eco-green);
+        }
+        .address-card {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+        .address-actions a {
+            color: var(--primary);
+            font-size: 14px;
+            margin-left: 10px;
+        }
+        .order-history table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .order-history th, .order-history td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .order-history th {
+            background: var(--light);
+            font-weight: bold;
+        }
+        .order-status {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status-delivered {
+            background: #e6f7e6;
+            color: var(--eco-green);
+        }
+        .status-shipped {
+            background: #fff8e6;
+            color: #e6a700;
+        }
+        .status-processing {
+            background: #e6f2ff;
+            color: var(--primary);
+        }
+        .btn {
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-outline {
+            background: white;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Walmart-style Navbar -->
+    <div class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">Chain Smart</div>
+            <div class="navbar-links">
+                <a href="#" class="navbar-link">Shop</a>
+                <a href="#" class="navbar-link">ESG Wallet</a>
+                
+            </div>
+           
+            <div class="navbar-actions">
+                <a href="#" class="navbar-icon">
+                    <span>Account</span>
+                </a>
+                <a href="#" class="navbar-icon">
+                    <span>Orders</span>
+                </a>
+                <a href="#" class="navbar-icon">
+                    <span>Cart</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="account-header">
+            <div class="welcome-msg">Welcome back, Shreya!</div>
+            <div class="member-since">Member since January 2021</div>
+        </div>
+
+        <div class="dashboard-layout">
+            <!-- Sidebar Navigation -->
+            <div class="sidebar">
+                <div class="nav-item active"><a href="#">Dashboard</a></div>
+                <div class="nav-item"><a href="#">Orders & Returns</a></div>
+                <div class="nav-item"><a href="#">Wallet & Rewards</a></div>
+                <div class="nav-item"><a href="#">ESG Profile</a></div>
+                <div class="nav-item"><a href="#">Address Book</a></div>
+                <div class="nav-item"><a href="#">Account Settings</a></div>
+                <div class="nav-item"><a href="#">Logout</a></div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Profile Summary -->
+                <div class="card">
+                    <div class="card-title">My Profile</div>
+                    <div class="profile-info">
+                        <div class="profile-pic">SH</div>
+                        <div class="profile-details">
+                            <div class="profile-name">Shreya Hole</div>
+                            <div class="profile-email">shreya.hole@example.com</div>
+                            <div class="profile-phone">+91 98765 43210</div>
+                        </div>
+                    </div>
+
+                    <!-- Wallet Balance -->
+                    <div class="wallet-section">
+                        <div>
+                            <div style="font-size: 14px; color: var(--medium);">Chain Smart Wallet</div>
+                            <div class="wallet-balance">2,150 pts (₹1,500)</div>
+                        </div>
+                        <button class="btn btn-outline">View Details</button>
+                    </div>
+
+                    <!-- Leaves Earned -->
+                    <div class="leaves-earned">
+                        <div class="leaves-icon">🌿</div>
+                        <div>
+                            <div style="font-size: 14px;">Your Sustainability Impact</div>
+                            <div>You've earned <span class="leaves-count">320 leaves</span> this year</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Orders -->
+                <div class="card">
+                    <div class="card-title">Active Orders</div>
+                    <div class="order-history">
+                        <table>
+                            <tr>
+                                <th>Order #</th>
+                                <th>Date</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            <tr>
+                                <td>CS-98452</td>
+                                <td>15 May 2023</td>
+                                <td>3 items</td>
+                                <td>₹1,899</td>
+                                <td><span class="order-status status-shipped">Shipped</span></td>
+                                <td><a href="#" style="color: var(--primary);">Track</a></td>
+                            </tr>
+                            <tr>
+                                <td>CS-98123</td>
+                                <td>10 May 2023</td>
+                                <td>5 items</td>
+                                <td>₹3,245</td>
+                                <td><span class="order-status status-processing">Processing</span></td>
+                                <td><a href="#" style="color: var(--primary);">View</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Address Book -->
+                <div class="card">
+                    <div class="card-title">Saved Addresses</div>
+                    <div class="address-card">
+                        <div>
+                            <strong>Home Address</strong><br>
+                            24, Green Heights Apartments<br>
+                            MG Road, Bangalore - 560001<br>
+                            Karnataka, India
+                        </div>
+                        <div class="address-actions">
+                            <a href="#">Edit</a>
+                            <a href="#">Remove</a>
+                        </div>
+                    </div>
+                    <div class="address-card">
+                        <div>
+                            <strong>Work Address</strong><br>
+                            Tech Park, Tower B<br>
+                            Whitefield, Bangalore - 560066<br>
+                            Karnataka, India
+                        </div>
+                        <div class="address-actions">
+                            <a href="#">Edit</a>
+                            <a href="#">Remove</a>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">+ Add New Address</button>
+                </div>
+
+                <!-- Order History -->
+                <div class="card">
+                    <div class="card-title">Recent Orders</div>
+                    <div class="order-history">
+                        <table>
+                            <tr>
+                                <th>Order #</th>
+                                <th>Date</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            <tr>
+                                <td>CS-97845</td>
+                                <td>28 Apr 2023</td>
+                                <td>4 items</td>
+                                <td>₹2,750</td>
+                                <td><span class="order-status status-delivered">Delivered</span></td>
+                                <td><a href="#" style="color: var(--primary);">Reorder</a></td>
+                            </tr>
+                            <tr>
+                                <td>CS-97612</td>
+                                <td>15 Apr 2023</td>
+                                <td>2 items</td>
+                                <td>₹1,299</td>
+                                <td><span class="order-status status-delivered">Delivered</span></td>
+                                <td><a href="#" style="color: var(--primary);">Review</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <button class="btn btn-outline" style="margin-top: 15px;">View Full Order History</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
