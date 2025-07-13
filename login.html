@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - ChainSmart</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="auth-container">
+    <div class="auth-left">
+      <div class="logo-circle">
+        <div class="checkmark">✓</div>
+      </div>
+      <h1>Login</h1>
+      <p>Welcome back to ChainSmart</p>
+    </div>
+
+    <div class="auth-right">
+      <div class="form-container">
+        <form class="auth-form" id="loginForm">
+          <div class="form-section active">
+            <h3>Welcome Back</h3>
+            <label>Email</label>
+            <input type="email" placeholder="Enter your email" required />
+
+            <label>Password</label>
+            <input type="password" placeholder="Enter your password" required />
+
+            <a href="#" class="forgot-link">Forgot Password?</a>
+
+            <button type="submit">Login</button>
+
+            <p class="switch-auth">New user? <a href="signup.html">Sign Up</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Simulate form submission
+      setTimeout(() => {
+        window.location.href = 'landing.html'; // Redirect to landing page after login
+      }, 500);
+    });
+  </script>
+</body>
+</html>

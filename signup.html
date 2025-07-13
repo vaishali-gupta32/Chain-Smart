@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up - ChainSmart</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="auth-container">
+    <div class="auth-left">
+      <div class="logo-circle">
+        <div class="checkmark">✓</div>
+      </div>
+      <h1>Sign up</h1>
+      <p>to use all features of the application</p>
+    </div>
+
+    <div class="auth-right">
+      <div class="form-container">
+        <form class="auth-form" id="signupForm">
+          <div class="form-section active" id="section1">
+            <h3>Basic Information</h3>
+            <label>Username</label>
+            <input type="text" placeholder="Enter username" required />
+
+            <label>Email</label>
+            <input type="email" placeholder="example@mail.com" required />
+
+            <label>Password</label>
+            <input type="password" placeholder="Enter password" required />
+
+            <label>Repeat Password</label>
+            <input type="password" placeholder="Confirm password" required />
+
+            <button type="button" class="next-btn" onclick="nextSection()">Next</button>
+          </div>
+
+          <div class="form-section" id="section2">
+            <h3>Additional Details</h3>
+            <label>State</label>
+            <select required>
+              <option value="">Choose your state</option>
+              <option>Andhra Pradesh</option>
+              <option>Karnataka</option>
+              <option>Maharashtra</option>
+              <option>Delhi</option>
+              <option>Tamil Nadu</option>
+            </select>
+
+            <label>Pincode</label>
+            <input type="text" placeholder="6-digit pincode" required pattern="[0-9]{6}" />
+            
+            <label>Aadhaar Number</label>
+            <input type="text" placeholder="12-digit Aadhaar number" required pattern="[0-9]{12}" />
+            
+            <div class="terms">
+              <input type="checkbox" required />
+              <label>I accept the <a href="#">terms and conditions</a></label>
+            </div>
+
+            <div class="button-group">
+              <button type="button" class="back-btn" onclick="prevSection()">Back</button>
+              <button type="submit" class="signup-btn">Sign up</button>
+            </div>
+          </div>
+
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+          </div>
+          
+          <p class="switch-auth">or <a href="login.html">Log in</a></p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSection = 1;
+    
+    function nextSection() {
+      if (currentSection < 2) {
+        document.getElementById('section' + currentSection).classList.remove('active');
+        currentSection++;
+        document.getElementById('section' + currentSection).classList.add('active');
+        updateProgressBar();
+      }
+    }
+    
+    function prevSection() {
+      if (currentSection > 1) {
+        document.getElementById('section' + currentSection).classList.remove('active');
+        currentSection--;
+        document.getElementById('section' + currentSection).classList.add('active');
+        updateProgressBar();
+      }
+    }
+    
+    function updateProgressBar() {
+      const progress = (currentSection / 2) * 100;
+      document.getElementById('progressBar').style.width = progress + '%';
+    }
+    
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Simulate form submission
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 500);
+    });
+    
+    // Initialize progress bar
+    updateProgressBar();
+  </script>
+</body>
+</html>

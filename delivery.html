@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChainSmart - Delivery Partner</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Styles - Walmart-like */
+        .navbar {
+            background-color: #0071dc;
+            padding: 0.8rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo img {
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: white;
+        }
+
+        .profile-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #ffc220;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 1.5rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Dashboard Section */
+        .dashboard-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Impact Card - Walmart blue theme */
+        .impact-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-top: 4px solid #0071dc;
+        }
+
+        .impact-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .impact-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #0071dc;
+        }
+
+        .impact-icon {
+            font-size: 1.5rem;
+            color: #0071dc;
+        }
+
+        .impact-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .stat-item {
+            background: #f7f7f7;
+            border-radius: 6px;
+            padding: 1rem;
+            border-left: 3px solid #0071dc;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+            color: #0071dc;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .co2-chart {
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin-top: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .co2-bar {
+            height: 100%;
+            background: #0071dc;
+            border-radius: 3px;
+            width: 65%;
+        }
+
+        .leaf-counter {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-top: 0.5rem;
+        }
+
+        .leaf {
+            color: #4CAF50;
+            font-size: 1rem;
+        }
+
+        /* Activity Card */
+        .activity-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-top: 4px solid #ffc220;
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .activity-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #0071dc;
+        }
+
+        .activity-icon {
+            font-size: 1.5rem;
+            color: #ffc220;
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .activity-action {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .activity-impact {
+            font-size: 0.9rem;
+            color: #4CAF50;
+            font-weight: 500;
+        }
+
+        /* Delivery Grid - Walmart-like cards */
+        .delivery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .delivery-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+            border-top: 4px solid #0071dc;
+        }
+
+        .delivery-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .delivery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .customer-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+            color: #0071dc;
+        }
+
+        .customer-address {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .delivery-id {
+            background: #f0f7ff;
+            color: #0071dc;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .items-list {
+            background: #f9f9f9;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item:last-child {
+            border-bottom: none;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .item-quantity {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .esg-rating {
+            display: flex;
+            gap: 2px;
+            align-items: center;
+        }
+
+        .leaf {
+            font-size: 0.9rem;
+        }
+
+        .deliver-btn {
+            background-color: #0071dc;
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+
+        .deliver-btn:hover {
+            background-color: #005aad;
+        }
+
+        .deliver-btn.pulse {
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        /* Map Section - Walmart-style */
+        .map-section {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            border-top: 4px solid #4CAF50;
+        }
+
+        .map-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .map-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #0071dc;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .map-icon {
+            color: #ffc220;
+        }
+
+        #map {
+            height: 400px;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            border: 1px solid #e0e0e0;
+        }
+
+        .route-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .route-card {
+            background: #f7f7f7;
+            color: #333;
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+            border-left: 3px solid #0071dc;
+        }
+
+        .route-distance {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+            color: #0071dc;
+        }
+
+        .route-label {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* Status Classes */
+        .completed {
+            opacity: 0.7;
+            background-color: #f9f9f9;
+        }
+
+        .completed .deliver-btn {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        /* Notification - Walmart-style */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dashboard-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .impact-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .delivery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <!-- Leaflet CSS for maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="logo">
+                <img src="" alt="">
+                <h2>ChainSmart</h2>
+            </div>
+            <div class="profile-section">
+                <span>Delivery Partner : Arjun Dubey</span>
+                <div class="profile-avatar">AM</div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Dashboard Section -->
+        <div class="dashboard-section">
+            <!-- Today's Impact -->
+            <div class="impact-card">
+                <div class="impact-header">
+                    <h3 class="impact-title">Today's Impact</h3>
+                    <div class="impact-icon"><i class="fas fa-leaf"></i></div>
+                </div>
+                
+                <div class="impact-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="deliveries-count">12</div>
+                        <div class="stat-label">Green Deliveries</div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="stat-value" id="co2-saved">8.5</div>
+                        <div class="stat-label">kg CO₂ Saved</div>
+                        <div class="co2-chart">
+                            <div class="co2-bar"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="stat-value">4.2</div>
+                        <div class="stat-label">Avg. ESG Rating</div>
+                        <div class="leaf-counter">
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf" style="color:#ccc"><i class="fas fa-leaf"></i></span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="stat-value">18.6</div>
+                        <div class="stat-label">Total km Covered</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Activity -->
+            <div class="activity-card">
+                <div class="activity-header">
+                    <h3 class="activity-title">Recent Activity</h3>
+                    <div class="activity-icon"><i class="fas fa-history"></i></div>
+                </div>
+                
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div>
+                            <div class="activity-action">Route optimized</div>
+                            <div class="activity-time">10:30 AM</div>
+                        </div>
+                        <div class="activity-impact">-2.3 kg CO₂</div>
+                    </div>
+                    <div class="activity-item">
+                        <div>
+                            <div class="activity-action">Eco-packaging used</div>
+                            <div class="activity-time">10:15 AM</div>
+                        </div>
+                        <div class="activity-impact">+1 <i class="fas fa-leaf"></i></div>
+                    </div>
+                    <div class="activity-item">
+                        <div>
+                            <div class="activity-action">Started morning route</div>
+                            <div class="activity-time">9:00 AM</div>
+                        </div>
+                        <div class="activity-impact">Route planned</div>
+                    </div>
+                    <div class="activity-item">
+                        <div>
+                            <div class="activity-action">EV charged</div>
+                            <div class="activity-time">8:30 AM</div>
+                        </div>
+                        <div class="activity-impact">Ready for delivery</div>
+                    </div>
+                    <div class="activity-item">
+                        <div>
+                            <div class="activity-action">Yesterday's summary</div>
+                            <div class="activity-time">Last night</div>
+                        </div>
+                        <div class="activity-impact">24 deliveries</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delivery Grid -->
+        <div class="delivery-grid">
+            <!-- Delivery 1 -->
+            <div class="delivery-card" data-delivery-id="CS-2024-001">
+                <div class="delivery-header">
+                    <div class="customer-info">
+                        <h3>Shreya Hole</h3>
+                        <div class="customer-address">B-204, Rajouri Garden, New Delhi</div>
+                    </div>
+                    <div class="delivery-id">#CS-2024-001</div>
+                </div>
+                
+                <div class="items-list">
+                    <div class="item">
+                        <div class="item-info">
+                            <div class="item-name">Organic Quinoa Pack</div>
+                            <div class="item-quantity">2x units</div>
+                        </div>
+                        <div class="esg-rating">
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="item-info">
+                            <div class="item-name">Bamboo Toothbrush Set</div>
+                            <div class="item-quantity">1x pack</div>
+                        </div>
+                        <div class="esg-rating">
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf" style="color:#ccc"><i class="fas fa-leaf"></i></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="deliver-btn" onclick="markAsDelivered(this)">Mark as Delivered</button>
+            </div>
+
+            <!-- Delivery 2 -->
+            <div class="delivery-card" data-delivery-id="CS-2024-002">
+                <div class="delivery-header">
+                    <div class="customer-info">
+                        <h3>Rajesh Patel</h3>
+                        <div class="customer-address">C-15, Connaught Place, New Delhi</div>
+                    </div>
+                    <div class="delivery-id">#CS-2024-002</div>
+                </div>
+                
+                <div class="items-list">
+                    <div class="item">
+                        <div class="item-info">
+                            <div class="item-name">Solar Phone Charger</div>
+                            <div class="item-quantity">1x unit</div>
+                        </div>
+                        <div class="esg-rating">
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="item-info">
+                            <div class="item-name">Reusable Water Bottle</div>
+                            <div class="item-quantity">2x units</div>
+                        </div>
+                        <div class="esg-rating">
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf" style="color:#ccc"><i class="fas fa-leaf"></i></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="deliver-btn" onclick="markAsDelivered(this)">Mark as Delivered</button>
+            </div>
+
+            <!-- Delivery 3 -->
+            <div class="delivery-card" data-delivery-id="CS-2024-003">
+                <div class="delivery-header">
+                    <div class="customer-info">
+                        <h3>Kavitha Menon</h3>
+                        <div class="customer-address">A-102, Karol Bagh, New Delhi</div>
+                    </div>
+                    <div class="delivery-id">#CS-2024-003</div>
+                </div>
+                
+                <div class="items-list">
+                    <div class="item">
+                        <div class="item-info">
+                            <div class="item-name">Organic Cotton T-Shirts</div>
+                            <div class="item-quantity">3x units</div>
+                        </div>
+                        <div class="esg-rating">
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf" style="color:#ccc"><i class="fas fa-leaf"></i></span>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="item-info">
+                            <div class="item-name">Biodegradable Phone Case</div>
+                            <div class="item-quantity">1x unit</div>
+                        </div>
+                        <div class="esg-rating">
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                            <span class="leaf"><i class="fas fa-leaf"></i></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="deliver-btn" onclick="markAsDelivered(this)">Mark as Delivered</button>
+            </div>
+        </div>
+
+        <!-- Map Section with Leaflet -->
+        <div class="map-section">
+            <div class="map-header">
+                <h2 class="map-title"><i class="fas fa-map-marked-alt"></i> Delivery Route Map</h2>
+                <div class="map-icon"><i class="fas fa-route"></i></div>
+            </div>
+            
+            <div id="map"></div>
+            
+            <div class="route-details">
+                <div class="route-card">
+                    <div class="route-distance">Rajouri Garden</div>
+                    <div class="route-label">2.3 km | First Stop</div>
+                </div>
+                <div class="route-card">
+                    <div class="route-distance">Connaught Place</div>
+                    <div class="route-label">3.1 km | Second Stop</div>
+                </div>
+                <div class="route-card">
+                    <div class="route-distance">Karol Bagh</div>
+                    <div class="route-label">5.2 km | Final Stop</div>
+                </div>
+                <div class="route-card">
+                    <div class="route-distance">18.6 km</div>
+                    <div class="route-label">Total Route Distance</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        <div class="notification-icon"><i class="fas fa-check-circle"></i></div>
+        <div id="notification-text"></div>
+    </div>
+
+    <!-- Leaflet JS for maps -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map
+        const map = L.map('map').setView([28.6139, 77.2090], 13);
+        
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Delivery locations in Delhi
+        const locations = [
+            {
+                name: "Rajouri Garden",
+                coords: [28.6488, 77.1195],
+                address: "B-204, Rajouri Garden, New Delhi",
+                distance: "2.3 km"
+            },
+            {
+                name: "Connaught Place",
+                coords: [28.6328, 77.2197],
+                address: "C-15, Connaught Place, New Delhi",
+                distance: "3.1 km"
+            },
+            {
+                name: "Karol Bagh",
+                coords: [28.6517, 77.1919],
+                address: "A-102, Karol Bagh, New Delhi",
+                distance: "5.2 km"
+            }
+        ];
+
+        // Add markers for each location
+        const markers = [];
+        locations.forEach(location => {
+            const marker = L.marker(location.coords)
+                .addTo(map)
+                .bindPopup(`
+                    <b>${location.name}</b><br>
+                    ${location.address}<br>
+                    <small>Distance: ${location.distance}</small>
+                `);
+            
+            // Add distance to marker
+            marker._icon.setAttribute('data-distance', location.distance);
+            markers.push(marker);
+        });
+
+        // Add a route line (simplified for demo)
+        const route = L.polyline([
+            locations[0].coords,
+            locations[1].coords,
+            locations[2].coords
+        ], {color: '#0071dc', weight: 4}).addTo(map);
+
+        // Fit map to show all markers
+        map.fitBounds(route.getBounds(), {padding: [50, 50]});
+
+        // Delivery tracking variables
+        let deliveryCount = 12;
+        let co2Saved = 8.5;
+
+        function animateCounter(element, target, duration = 1000) {
+            const start = parseInt(element.textContent) || 0;
+            const increment = (target - start) / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current);
+            }, 16);
+        }
+
+        function updateCO2Chart() {
+            const maxCO2 = 50;
+            const percentage = Math.min((co2Saved / maxCO2) * 100, 100);
+            document.querySelector('.co2-bar').style.width = percentage + '%';
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notification-text');
+            
+            notificationText.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function addActivityItem(action, impact) {
+            const activityList = document.querySelector('.activity-list');
+            const now = new Date();
+            const time = now.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            
+            const activityItem = document.createElement('div');
+            activityItem.className = 'activity-item';
+            activityItem.innerHTML = `
+                <div>
+                    <div class="activity-action">${action}</div>
+                    <div class="activity-time">${time}</div>
+                </div>
+                <div class="activity-impact">${impact}</div>
+            `;
+            
+            activityList.insertBefore(activityItem, activityList.firstChild);
+            
+            // Remove oldest item if more than 5
+            if (activityList.children.length > 5) {
+                activityList.removeChild(activityList.lastChild);
+            }
+        }
+
+        function markAsDelivered(button) {
+            const deliveryCard = button.closest('.delivery-card');
+            const deliveryId = deliveryCard.getAttribute('data-delivery-id');
+            const customerName = deliveryCard.querySelector('.customer-info h3').textContent;
+            const address = deliveryCard.querySelector('.customer-address').textContent;
+            
+            // Add pulse animation
+            button.classList.add('pulse');
+            
+            setTimeout(() => {
+                // Mark as completed
+                deliveryCard.classList.add('completed');
+                button.textContent = 'Delivered ✓';
+                button.disabled = true;
+                
+                // Update counters
+                deliveryCount++;
+                const newCO2 = Math.random() * 3 + 1; // Random CO2 savings between 1-4 kg
+                co2Saved += newCO2;
+                
+                // Animate counters
+                animateCounter(document.getElementById('deliveries-count'), deliveryCount);
+                animateCounter(document.getElementById('co2-saved'), Math.floor(co2Saved));
+                
+                // Update CO2 chart
+                updateCO2Chart();
+                
+                // Show notification
+                showNotification(`Delivery to ${customerName} completed! +${newCO2.toFixed(1)} kg CO₂ saved`);
+                
+                // Add to activity
+                addActivityItem(`Delivered to ${customerName.split(' ')[0]}`, `+${newCO2.toFixed(1)} kg CO₂`);
+                
+                // Remove marker from map
+                const addressPart = address.split(',')[1].trim();
+                markers.forEach(marker => {
+                    const markerAddress = marker._popup._content.split('<br>')[1].trim();
+                    if (markerAddress.includes(addressPart)) {
+                        map.removeLayer(marker);
+                    }
+                });
+                
+                // Remove pulse animation
+                button.classList.remove('pulse');
+            }, 500);
+        }
+    </script>
+</body>
+</html>
